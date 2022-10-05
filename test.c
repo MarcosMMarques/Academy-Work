@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+//To-Do: ToUpper initial letter of name, implenting quicksort, orderning on register function and unit tests.
 
 typedef struct{
 char name[60];
