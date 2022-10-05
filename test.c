@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 typedef struct{
 char name[60];
@@ -69,6 +70,23 @@ void ComissionCalc(Seller *array, int *currently_seller_quantity){
     }
 }
 
+void Order(Seller *array, int *currently_seller_quantity){
+    for(int i = 0; i < *currently_seller_quantity - 1 ; i++){
+        for(int j = i+1; j < *currently_seller_quantity; j++){
+            if(strcmp(array[i].name, array[j].name) > 0){
+                Seller * aux;
+                *aux = array[i];
+                array[i] = array[j];
+                array[j] = *aux;
+            }
+        }
+    }
+}
+
+//void SearchSeller(Seller *array, int *currently_seller_quantity, char name[60]){
+
+//}
+
 int main(){
     int loop=1, option, quantity_v=0,aux;
     Seller *array;
@@ -105,6 +123,11 @@ int main(){
                 break;
             
             case 4:
+                char name[60];
+                //printf("Digite o nome do vendedor:\n");
+                //scanf("%s", name);
+                Order(array, &quantity_v);
+                //SearchSeller(array, &quantity_v, name);
         }
     }
 }
