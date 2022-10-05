@@ -45,9 +45,19 @@ Seller * NewRegistrations(Seller *array, int *currently_seller_quantity, int qua
 void ShowSellers(Seller *array, int *currently_seller_quantity){
     for(int i = 0; i < *currently_seller_quantity; i++){
         printf("\nCliente %d\n",i+1);
-        printf("Nome: %s\n",array[i].name);
-        printf("CPF: %s\n",array[i].cpf); 
-        printf("Data de nascimento: %s\n",array[i].BirthDate);
+        printf("Nome: %s\n", array[i].name);
+        printf("CPF: ");
+        int x=0;
+        while(array[i].cpf[x] != '\0'){
+            printf("%c", array[i].cpf[x]);
+            x++;
+            if(x%3==0 && x != 9){
+                printf(".");
+            }else if(x == 9){
+                printf("-");
+            } 
+        }
+        printf("\nData de nascimento: %s\n",array[i].BirthDate);
         printf("Salario Base: R$%.2f\n",array[i].BaseSalary);
         printf("Total Vendido: R$%.2f\n", array[i].TotalSold);
     }
