@@ -40,7 +40,6 @@ Seller * NewRegistrations(Seller *array, int *currently_seller_quantity, int qua
         printf("Total Vendido:\n");
         scanf("%f", &array[i].TotalSold);
     }
-
     return array;
 }
 
@@ -75,18 +74,48 @@ void Order(Seller *array, int *currently_seller_quantity){
     for(int i = 0; i < *currently_seller_quantity - 1 ; i++){
         for(int j = i+1; j < *currently_seller_quantity; j++){
             if(strcmp(array[i].name, array[j].name) > 0){
-                Seller * aux;
-                *aux = array[i];
-                array[i] = array[j];
-                array[j] = *aux;
+                Seller aux;
+
+                strcpy(aux.name, array[i].name);
+                strcpy(aux.cpf, array[i].cpf);
+                strcpy(aux.BirthDate, array[i].BirthDate);
+                aux.BaseSalary = array[i].BaseSalary;
+                aux.TotalSold = array[i].TotalSold;
+                
+                strcpy(array[i].name, array[j].name);
+                strcpy(array[i].cpf, array[j].cpf);
+                strcpy(array[i].BirthDate, array[j].BirthDate);
+                array[i].BaseSalary = array[j].BaseSalary;
+                array[i].TotalSold = array[j].TotalSold;
+
+                strcpy(array[j].name, aux.name);
+                strcpy(array[j].cpf, aux.cpf);
+                strcpy(array[j].BirthDate, aux.BirthDate);
+                array[j].BaseSalary = aux.BaseSalary;
+                array[j].TotalSold = aux.TotalSold;    
             }
         }
     }
 }
 
-//void SearchSeller(Seller *array, int *currently_seller_quantity, char name[60]){
+int SearchSeller(Seller *array, int start, int final, char name[60]){
+    int middle;
+    char selected_name[60];
+    if(start > final){
+        return -1;
+    }else{
+        middle = (start + final)/2;
+        strcpy(selected_name, array[middle].name);
 
-//}
+        if(strcmp(name, selected_name) == 0){
+            return middle;
+        }else if(strcmp(name, selected_name) > 0){
+            SearchSeller(array, middle+1, final, name);
+        }else{
+            SearchSeller(array, start, middle-1, name);
+        }
+    }
+}
 
 int main(){
     int loop=1, option, quantity_v=0,aux;
@@ -112,6 +141,7 @@ int main(){
                 scanf("%d",&aux);
                 array = NewRegistrations(array,&quantity_v,aux);
                 quantity_v+= aux;
+                Order(array, &quantity_v);
                 printf("\n");
                 break;
             
@@ -125,10 +155,32 @@ int main(){
             
             case 4:
                 char name[60];
-                //printf("Digite o nome do vendedor:\n");
-                //scanf("%s", name);
-                Order(array, &quantity_v);
-                //SearchSeller(array, &quantity_v, name);
+                int position;
+                printf("Digite o nome do vendedor:\n");
+                scanf("%s", name);
+                position = SearchSeller(array, 0, quantity_v, name);
+                if(position == -1){
+                    printf("\n!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                    printf("!Vendedor não encontrado!\n");
+                    printf("!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
+                }else{
+                    printf("\n\nCliente %d\n",position+1);
+                    printf("Nome: %s\n", array[position].name);
+                    printf("CPF: ");
+                    int x=0;
+                    while(array[position].cpf[x] != '\0'){
+                        printf("%c", array[position].cpf[x]);
+                        x++;
+                        if(x%3==0 && x != 9){
+                            printf(".");
+                        }else if(x == 9){
+                            printf("-");
+                        } 
+                    }
+                    printf("\nData de nascimento: %s\n",array[position].BirthDate);
+                    printf("Salario Base: R$%.2f\n",array[position].BaseSalary);
+                    printf("Total Vendido: R$%.2f\n\n", array[position].TotalSold);    
+                }
         }
     }
 }
