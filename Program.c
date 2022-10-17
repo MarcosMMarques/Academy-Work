@@ -1,7 +1,9 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<ctype.h>
 #include<string.h>
-//To-Do: ToUpper initial letter of name, implenting quicksort, orderning on register function and unit tests.
+#include<stdlib.h>
+//To-Do: Unit tests.
 
 typedef struct{
 char name[60];
@@ -12,6 +14,7 @@ float TotalSold ;
 }Seller;
 
 Seller * NewRegistrations(Seller *array, int *currently_seller_quantity, int quantity_reg){
+    system("clear");
     if(*currently_seller_quantity == 0){
         array = (Seller *) malloc((*currently_seller_quantity + quantity_reg) * sizeof(Seller));
     }else{
@@ -20,34 +23,51 @@ Seller * NewRegistrations(Seller *array, int *currently_seller_quantity, int qua
 
     for(int i = *currently_seller_quantity; i < quantity_reg + *currently_seller_quantity; i++){
         printf("Cadastro do Usuario : %d\n",i+1);
-        fflush(stdin);
+        // fflush(stdin);
+        printf("Nome: ");
+        //scanf("%s",array[i].name);
+        // getline()
+        scanf("%[^\n]%*c",array[i].name);
+        // fgets(array[i].name, sizeof(array[i].name), stdin);
+        // fgets(array[i].name, sizeof(array[i].name), stdin);
+        // char name[10];s
+        // fgets(name, 10, stdin);
+        // printf("%s",name);
+        int x = 0;
+        while(array[i].name[x] != '\0'){
+            if(x == 0){
+                array[i].name[x] = toupper(array[i].name[x]);
+            }
+            if(array[i].name[x] == ' '){
+                array[i].name[x+1] = toupper(array[i].name[x+1]);
+            }
+            x++;
+        }
 
-        printf("Nome:\n");
-        scanf("%s",array[i].name);
-        fflush(stdin);
+        printf("CPF: ");                
+        scanf("%[^\n]%*c",array[i].cpf);
 
-        printf("CPF:\n");
-        scanf("%s",array[i].cpf);
-        fflush(stdin);
 
-        printf("Data de nascimento:\n");
-        scanf("%s",array[i].BirthDate);
-        fflush(stdin);
+        printf("Data de nascimento: ");
+        scanf("%[^\n]",array[i].BirthDate);
 
-        printf("SalarioBase:\n");
+
+        printf("SalarioBase: ");
         scanf("%f", &array[i].BaseSalary);
 
-        printf("Total Vendido:\n");
-        scanf("%f", &array[i].TotalSold);
+        printf("Total Vendido: ");
+        scanf("%f%*c", &array[i].TotalSold);
+        printf("\n\n");
     }
     return array;
 }
 
 void ShowSellers(Seller *array, int *currently_seller_quantity){
+    system("clear"); 
     for(int i = 0; i < *currently_seller_quantity; i++){
-        printf("\nCliente %d\n",i+1);
-        printf("Nome: %s\n", array[i].name);
-        printf("CPF: ");
+        printf("Cliente %d\n",i+1);
+        printf("Nome: %s", array[i].name);
+        printf("\nCPF: ");
         int x=0;
         while(array[i].cpf[x] != '\0'){
             printf("%c", array[i].cpf[x]);
@@ -60,11 +80,12 @@ void ShowSellers(Seller *array, int *currently_seller_quantity){
         }
         printf("\nData de nascimento: %s\n",array[i].BirthDate);
         printf("Salario Base: R$%.2f\n",array[i].BaseSalary);
-        printf("Total Vendido: R$%.2f\n", array[i].TotalSold);
+        printf("Total Vendido: R$%.2f\n\n", array[i].TotalSold);
     }
 }
 
 void ComissionCalc(Seller *array, int *currently_seller_quantity){
+    system("clear");
     for(int i = 0; i < *currently_seller_quantity; i++){
         printf("\n%s: R$%.2f\n", array[i].name, array[i].TotalSold * 3/100);
     }
@@ -129,7 +150,7 @@ int main(){
         printf("Mostrar dados de um vendedor específico (4)\n");
         printf("Sair do Programa (0)\n");
         printf("*******************************************\n");
-        scanf("%d",&option);
+        scanf("%d%*c",&option);
         switch(option){
             case 0:
                 free(array);
@@ -138,33 +159,45 @@ int main(){
             
             case 1:
                 printf("Digite quantos vendedores quer cadastrar:\n");
-                scanf("%d",&aux);
+                scanf("%d%*c",&aux);
                 array = NewRegistrations(array,&quantity_v,aux);
                 quantity_v+= aux;
                 Order(array, &quantity_v);
-                printf("\n");
                 break;
             
             case 2:
                 ShowSellers(array, &quantity_v);
+                printf("\n\n");
                 break;
             
             case 3:
                 ComissionCalc(array, &quantity_v);
+                printf("\n\n");
                 break;
             
             case 4:
                 char name[60];
                 int position;
                 printf("Digite o nome do vendedor:\n");
-                scanf("%s", name);
+                scanf("%[^\n]", name);
+                int aux=0;
+                while(name[aux] != '\0'){
+                    if(aux == 0){
+                        name[aux] = toupper(name[aux]);
+                    }
+                    if(name[aux] == ' '){
+                        name[aux+1] = toupper(name[aux+1]);
+                    }
+                        aux++;
+                }
                 position = SearchSeller(array, 0, quantity_v, name);
+                system("clear");
                 if(position == -1){
-                    printf("\n!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                    printf("!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                     printf("!Vendedor não encontrado!\n");
                     printf("!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
                 }else{
-                    printf("\n\nCliente %d\n",position+1);
+                    printf("Cliente %d\n",position+1);
                     printf("Nome: %s\n", array[position].name);
                     printf("CPF: ");
                     int x=0;

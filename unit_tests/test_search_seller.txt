@@ -1,0 +1,51 @@
+Cliente 1
+Nome: Bruce Wayne
+CPF: 234.457.631-19
+Data de nascimento: 05/09/2003
+Salario Base: R$1000000.00
+Total Vendido: R$1000000.00
+
+Cliente 2
+Nome: Edward Keney
+CPF: 132.789.576-35
+Data de nascimento: 12/01/1997
+Salario Base: R$3500.00
+Total Vendido: R$100.00
+
+Cliente 3
+Nome: Marcos Marques
+CPF: 123.456.789-10
+Data de nascimento: 30/12/2012
+Salario Base: R$1200.00
+Total Vendido: R$100.00
+
+
+
+*******************************************
+O que deseja fazer? Digite a opção Desejada:
+Cadastrar Novos Vendedores (1)
+Mostrar os dados de todos os Vendedores Cadastrados (2)
+Calcular comissões (3)
+Mostrar dados de um vendedor específico (4)
+Sair do Programa (0)
+*******************************************
+4
+Digite o nome do vendedor:
+Marcos Marques
+
+Cliente 3
+Nome: Marcos Marques
+CPF: 123.456.789-10
+Data de nascimento: 30/12/2012
+Salario Base: R$1200.00
+Total Vendido: R$100.00
+
+*******************************************
+O que deseja fazer? Digite a opção Desejada:
+Cadastrar Novos Vendedores (1)
+Mostrar os dados de todos os Vendedores Cadastrados (2)
+Calcular comissões (3)
+Mostrar dados de um vendedor específico (4)
+Sair do Programa (0)
+*******************************************
+0
