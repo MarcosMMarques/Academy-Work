@@ -16,23 +16,15 @@ float TotalSold ;
 Seller * NewRegistrations(Seller *array, int *currently_seller_quantity, int quantity_reg){
     system("clear");
     if(*currently_seller_quantity == 0){
-        array = (Seller *) malloc((*currently_seller_quantity + quantity_reg) * sizeof(Seller));
+        array = (Seller *) malloc(quantity_reg * sizeof(Seller));
     }else{
         array = (Seller *) realloc(array,(*currently_seller_quantity + quantity_reg) * sizeof(Seller));
     }
 
     for(int i = *currently_seller_quantity; i < quantity_reg + *currently_seller_quantity; i++){
         printf("Cadastro do Usuario : %d\n",i+1);
-        // fflush(stdin);
         printf("Nome: ");
-        //scanf("%s",array[i].name);
-        // getline()
         scanf("%[^\n]%*c",array[i].name);
-        // fgets(array[i].name, sizeof(array[i].name), stdin);
-        // fgets(array[i].name, sizeof(array[i].name), stdin);
-        // char name[10];s
-        // fgets(name, 10, stdin);
-        // printf("%s",name);
         int x = 0;
         while(array[i].name[x] != '\0'){
             if(x == 0){
